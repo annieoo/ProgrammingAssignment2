@@ -1,7 +1,7 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Computing the inverse of a square matrix can be done with the solve function in R. 
+## For example, if X is a square invertible matrix, then solve(X) returns its inverse.
 
-## Write a short comment describing this function
+## This function creates a special "matrix" object that can cache its inverse.
 
 makeCacheMatrix <- function(x = matrix()) {
 	m <- NULL
@@ -10,27 +10,26 @@ makeCacheMatrix <- function(x = matrix()) {
     	m <<- NULL
   	}
   	get <- function() x
-  	setmean <- function(mean) m <<- mean
-  	getmean <- function() m
+  	setinv <- function(inv) m <<- inv
+  	getinv <- function() m
   	list(set = set, get = get,
-       		setmean = setmean,
-       		getmean = getmean)
+       		setinv = setinv,
+       		getinv = getinv)
 
 }
 
-
-## Write a short comment describing this function
+## This function computes the inverse of the special "matrix" returned by makeCacheMatrix above.
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
 
-	m <- x$getmean()
+	m <- x$getinv()
   	if(!is.null(m)) {
     		message("getting cached data")
     	return(m)
   	}
   	data <- x$get()
-  	m <- mean(data, ...)
-  	x$setmean(m)
+  	m <- solve(data, ...)
+  	x$setinv(m)
   	m
 }
